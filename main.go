@@ -9,7 +9,7 @@ import (
 	"gohub/pkg/config"
 )
 
-func init()  {
+func init() {
 	//加载配置
 	btsConfig.Initialize()
 }
@@ -24,6 +24,10 @@ func main() {
 	// new 一个 Gin Engine 实例
 	router := gin.New()
 
+	//初始化DB
+	bootstrap.SetupDB()
+
+	//初始化路由绑定
 	bootstrap.SetupRoute(router)
 
 	//运行服务
