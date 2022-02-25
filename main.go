@@ -31,7 +31,7 @@ func main() {
 	bootstrap.SetupRoute(router)
 
 	//运行服务
-	err := router.Run(":3000")
+	err := router.Run(":3002")
 	if err != nil {
 		//错误处理，端口被占了或其他错误
 		fmt.Println(err.Error())
