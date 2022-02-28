@@ -9,8 +9,8 @@ type SignupPhoneExistRequest struct {
 	Phone string `json:"phone,omitempty" valid:"phone"`
 }
 
-// ValidateSignupPhoneExist 手机号码验证
-func ValidateSignupPhoneExist(data interface{}, c *gin.Context) map[string][]string {
+// SignupPhoneExist 手机号码验证
+func SignupPhoneExist(data interface{}, c *gin.Context) map[string][]string {
 	//定义验证规则
 	rules := govalidator.MapData{
 		"phone": []string{"required", "digits:11"},
@@ -23,24 +23,14 @@ func ValidateSignupPhoneExist(data interface{}, c *gin.Context) map[string][]str
 			"digits:手机号码应为11位的数字",
 		},
 	}
-
-	//配置初始化
-	opts := govalidator.Options{
-		Data:          data,
-		Rules:         rules,
-		Messages:      messages,
-		TagIdentifier: "valid",
-	}
-
-	//开始验证
-	return govalidator.New(opts).ValidateStruct()
+	return validate(data, rules, messages)
 }
 
 type SignupEmailRequest struct {
 	Email string `json:"email,omitempty" valid:"email"`
 }
 
-func ValidateSignupEmailExist(data interface{}, c *gin.Context) map[string][]string {
+func SignupEmailExist(data interface{}, c *gin.Context) map[string][]string {
 	//定义规则
 	rules := govalidator.MapData{
 		"email": []string{"required", "min:4", "max:30", "email"},
@@ -56,14 +46,5 @@ func ValidateSignupEmailExist(data interface{}, c *gin.Context) map[string][]str
 		},
 	}
 
-	//配置初始化
-	opts := govalidator.Options{
-		Data:          data,
-		Rules:         rules,
-		Messages:      messages,
-		TagIdentifier: "valid",
-	}
-
-	//验证规则
-	return govalidator.New(opts).ValidateStruct()
+	return validate(data, rules, messages)
 }
