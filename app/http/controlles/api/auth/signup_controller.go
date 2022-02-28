@@ -50,3 +50,31 @@ func (sc *SignupController) IsPhoneExist(c *gin.Context) {
 		"exist": user.IsPhoneExist(request.Phone),
 	})
 }
+
+// IsEmailExist 检测邮箱是否已注册
+func (sc SignupController) IsEmailExist(c *gin.Context) {
+	request := requests.SignupEmailRequest{}
+
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
+			"error": err.Error(),
+		})
+
+		fmt.Println(err.Error())
+
+		return
+	}
+
+	//验证规则
+	errs := requests.ValidateSignupEmailExist(&request, c)
+	if len(errs) > 0 {
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
+			"errors": errs,
+		})
+	}
+
+	//检测数据
+	c.AbortWithStatusJSON(http.StatusOK, gin.H{
+		"exits": user.IsEmailExist(request.Email),
+	})
+}
