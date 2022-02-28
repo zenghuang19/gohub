@@ -5,9 +5,9 @@ import "gohub/app/models"
 type User struct {
 	models.BaseModel
 	Name     string `json:"name,omitempty"`
-	Email    string `json:"_"`
-	Phone    string `json:"_"`
-	Password string `json:"_"`
+	Email    string `json:"-"`
+	Phone    string `json:"phone"`
+	Password string `json:"-"`
 
 	models.CommonTimestampsField
 }
