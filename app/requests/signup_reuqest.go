@@ -20,7 +20,7 @@ func SignupPhoneExist(data interface{}, c *gin.Context) map[string][]string {
 	messages := govalidator.MapData{
 		"phone": []string{
 			"required:手机号码必填",
-			"digits:手机号码应为11位的数字",
+			"digits:手机号码应为11位字符串数字",
 		},
 	}
 	return validate(data, rules, messages)

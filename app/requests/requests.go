@@ -11,6 +11,7 @@ import (
 type ValidateFun func(interface{}, *gin.Context) map[string][]string
 
 func Validate(c *gin.Context, obj interface{}, handler ValidateFun) bool {
+	//1.解析请求，支持JSON数据、表单请求和URL Query
 	if err := c.ShouldBind(obj); err != nil {
 		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
 			"errors":  err.Error(),
@@ -22,9 +23,10 @@ func Validate(c *gin.Context, obj interface{}, handler ValidateFun) bool {
 		return false
 	}
 
-	//表单验证
+	//2.表单验证
 	erro := handler(obj, c)
 
+	//3.判断验证是否通过
 	if len(erro) > 0 {
 		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
 			"error":   erro,
