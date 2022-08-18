@@ -17,9 +17,12 @@ func BcryptHash(password string) string {
 }
 
 // BcryptCheck 对比明文密码和数据库的哈希值
-func BcryptCheck(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
+func BcryptCheck(plainPwd, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(plainPwd))
+	if err != nil {
+		return false
+	}
+	return true
 }
 
 // BcryptIsHashed 判断字符串是否是哈希过的数据

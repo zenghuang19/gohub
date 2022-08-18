@@ -13,7 +13,7 @@ func Attempt(email string, password string) (user.User, error) {
 		return user.User{}, errors.New("账号不存在")
 	}
 
-	if userModel.ComparePassword(password) {
+	if !userModel.ComparePassword(password) {
 		return user.User{}, errors.New("密码不正确")
 	}
 
