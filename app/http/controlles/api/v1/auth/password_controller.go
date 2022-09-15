@@ -28,3 +28,21 @@ func (p PasswordController) ResetPassword(c *gin.Context) {
 		response.Success(c)
 	}
 }
+
+func (p PasswordController) ResetByEmail(c *gin.Context) {
+	request := requests.ResetByEmailRequest{}
+	if ok := requests.Validate(c, &request, requests.ResetByEmail); !ok {
+		return
+	}
+
+	// 更新密码
+	userModel := user.GetByEmail(request.Email)
+	if userModel.ID == 0 {
+		response.Abort404(c)
+	} else {
+		userModel.Password = request.Password
+		user.Save(&userModel)
+
+		response.Success(c)
+	}
+}

@@ -38,6 +38,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 
 			pws := new(auth.PasswordController)
 			authGroup.POST("/password-reset/using-phone", pws.ResetPassword)
+			authGroup.POST("/password-reset/using-email", pws.ResetByEmail)
 		}
 
 	}
