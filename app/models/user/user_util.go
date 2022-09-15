@@ -18,3 +18,9 @@ func IsPhoneExist(phone string) bool {
 
 	return count > 0
 }
+
+// Get 通过Id获取数据
+func Get(idstr string) (userModel User) {
+	database.DB.Where("id", idstr).First(&userModel)
+	return
+}
