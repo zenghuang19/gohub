@@ -73,7 +73,7 @@ func limitHandler(c *gin.Context, key string, limit string) bool {
 	if rate.Reached {
 		// 提示用户超额了
 		c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
-			"message": "接口请求太频繁",
+			"message": "接口请求太频繁,请稍后再试",
 		})
 		return false
 	}
