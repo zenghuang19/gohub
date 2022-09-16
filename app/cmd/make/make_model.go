@@ -8,7 +8,7 @@ import (
 
 var CmdMakeModel = &cobra.Command{
 	Use:   "model",
-	Short: "Crate model.stub file, example: make model.stub user",
+	Short: "Crate model.stub file, example: make model user",
 	Run:   runMakeModel,
 	Args:  cobra.ExactArgs(1), // 只允许且必须传 1 个参数
 }
