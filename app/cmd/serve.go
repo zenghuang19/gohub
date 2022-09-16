@@ -12,7 +12,7 @@ import (
 // CmdServe represents the available web sub-command.
 var CmdServe = &cobra.Command{
 	Use:   "serve",
-	Short: "Start web server",
+	Short: "启动服务",
 	Run:   runWeb,
 	Args:  cobra.NoArgs,
 }
