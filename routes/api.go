@@ -67,6 +67,8 @@ func RegisterAPIRoutes(r *gin.Engine) {
 	cgc := new(controller.CategoriesController)
 	cgcGroup := v1.Group("/category")
 	{
+		cgcGroup.GET("", cgc.Index)
 		cgcGroup.POST("create", cgc.Store)
+		cgcGroup.PUT("update/:id", cgc.Update)
 	}
 }
