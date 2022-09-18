@@ -70,5 +70,6 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		cgcGroup.GET("", cgc.Index)
 		cgcGroup.POST("create", cgc.Store)
 		cgcGroup.PUT("update/:id", cgc.Update)
+		cgcGroup.DELETE("/delete", cgc.Delete)
 	}
 }
