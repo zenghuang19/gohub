@@ -63,4 +63,10 @@ func RegisterAPIRoutes(r *gin.Engine) {
 	{
 		userGroup.GET("", user.Index)
 	}
+
+	cgc := new(controller.CategoriesController)
+	cgcGroup := v1.Group("/category")
+	{
+		cgcGroup.POST("create", cgc.Store)
+	}
 }
