@@ -3,6 +3,7 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"gohub/app/models/topic"
+	"gohub/app/policies"
 	"gohub/app/requests"
 	"gohub/pkg/auth"
 	"gohub/pkg/response"
@@ -47,38 +48,35 @@ func (ctrl *TopicsController) Store(c *gin.Context) {
 	}
 }
 
-//func (ctrl *TopicsController) Update(c *gin.Context) {
-//
-//    topicModel := topic.Get(c.Param("id"))
-//    if topicModel.ID == 0 {
-//        response.Abort404(c)
-//        return
-//    }
-//
-//    if ok := policies.CanModifyTopic(c, topicModel); !ok {
-//        response.Abort403(c)
-//        return
-//    }
-//
-//    request := requests.TopicRequest{}
-//    bindOk, errs := requests.Validate(c, &request, requests.TopicSave)
-//    if !bindOk {
-//        return
-//    }
-//    if len(errs) > 0 {
-//        response.ValidationError(c, errs)
-//        return
-//    }
-//
-//    topicModel.FieldName = request.FieldName
-//    rowsAffected := topicModel.Save()
-//    if rowsAffected > 0 {
-//        response.Data(c, topicModel)
-//    } else {
-//        response.Abort500(c, "更新失败，请稍后尝试~")
-//    }
-//}
-//
+func (ctrl *TopicsController) Update(c *gin.Context) {
+
+	topicModel := topic.Get(c.Param("id"))
+	if topicModel.ID == 0 {
+		response.Abort404(c)
+		return
+	}
+
+	if ok := policies.CanModifyTopic(c, topicModel); !ok {
+		response.Abort403(c)
+		return
+	}
+
+	request := requests.TopicRequest{}
+	if ok := requests.Validate(c, &request, requests.TopicSave); !ok {
+		return
+	}
+
+	topicModel.Title = request.Title
+	topicModel.Body = request.Body
+	topicModel.CategoryID = request.CategoryID
+	rowsAffected := topicModel.Save()
+	if rowsAffected > 0 {
+		response.Data(c, topicModel)
+	} else {
+		response.Abort500(c, "更新失败，请稍后尝试~")
+	}
+}
+
 //func (ctrl *TopicsController) Delete(c *gin.Context) {
 //
 //    topicModel := topic.Get(c.Param("id"))

@@ -77,5 +77,6 @@ func RegisterAPIRoutes(r *gin.Engine) {
 	tcpGroup := v1.Group("/topic")
 	{
 		tcpGroup.POST("create", middlewares.AuthJwt(), tcp.Store)
+		tcpGroup.POST("update/:id", middlewares.AuthJwt(), tcp.Update)
 	}
 }
