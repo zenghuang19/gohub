@@ -72,4 +72,10 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		cgcGroup.PUT("update/:id", cgc.Update)
 		cgcGroup.DELETE("/delete", cgc.Delete)
 	}
+
+	tcp := new(controller.TopicsController)
+	tcpGroup := v1.Group("/topic")
+	{
+		tcpGroup.POST("create", middlewares.AuthJwt(), tcp.Store)
+	}
 }
